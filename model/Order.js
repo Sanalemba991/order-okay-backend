@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Product = require("./Product");
 
 const orderSchema = new mongoose.Schema({
   user: {
@@ -17,6 +18,12 @@ const orderSchema = new mongoose.Schema({
       id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Product",
+        required: true,
+      },
+      product: {
+        type: String,
+        ref: "Product",
+
         required: true,
       },
       quantity: {
