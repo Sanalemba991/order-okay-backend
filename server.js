@@ -210,38 +210,35 @@ app.post("/order", authenticateJWT, async (req, res) => {
   try {
     const { email } = req.user;
     const user = await UserModel.findOne({ email });
+
     if (!user) {
       return sendResponse(res, 404, "User not found");
     }
 
-    // console.log("U>", user);
-
     const { items } = req.body;
+
     if (!items || items.length === 0) {
       return sendResponse(res, 400, "Order must contain at least one item");
     }
 
-    console.log("items: ", items);
-    
-    // const order = new OrderModel({
-    //   user: user._id,
-    //   items,
-    // });
-
+    // Create the order with the proper user structure
     const order = new OrderModel({
-      user: req.user.id,
+      user: {
+        id: user._id,
+        email: user.email,
+      },
       items,
     });
 
-    // console.log("U>", order);
-
     await order.save();
+
     return sendResponse(res, 201, "Order created successfully", { order });
   } catch (error) {
     console.error(error);
     return sendResponse(res, 500, "Server error");
   }
 });
+
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
