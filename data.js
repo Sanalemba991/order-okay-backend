@@ -61,7 +61,7 @@ const data = {
       ProductPicture: "localhost:4000/images/6.jpg",
       ProductName: "METAL MOUNTAIN",
       ModelNumber: "SM-Z s278 and SM-Z s279",
-      Quantity: "1 (Set of 2)" ,
+      Quantity: "1 (Set of 2)",
       Size: "280X80X320 and 280X70X270",
 
       Price: 14999,
@@ -117,7 +117,7 @@ const data = {
       ProductPicture: "localhost:4000/images/11.jpg",
       ProductName: "DEER STATUE 2",
       ModelNumber: "RD5543L and RD5543S",
-      Quantity:"1 (Set of 2)" ,
+      Quantity: "1 (Set of 2)",
       Size: "220X190X535 and 290X180X380",
 
       Price: 20499,
