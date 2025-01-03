@@ -11,12 +11,13 @@ const ProductModel = require("./model/Product");
 const OrderModel = require("./model/Order");
 const authenticateJWT = require("./middlewares/authenticateJWT");
 const data = require("./data");
-app.use(cors());
+
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 app.use("/images", express.static("images"));
+app.use(cors());
 
 mongoose
   .connect(process.env.MONGO_URI)
