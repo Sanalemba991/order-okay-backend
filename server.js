@@ -10,7 +10,7 @@ const UserModel = require("./model/User");
 const ProductModel = require("./model/Product");
 const OrderModel = require("./model/Order");
 const authenticateJWT = require("./middlewares/authenticateJWT");
-const data = require("./data");  // Import the data file
+const data = require("./data"); // Import the data file
 
 dotenv.config();
 
@@ -25,7 +25,7 @@ mongoose
     console.log("Connected to MongoDB");
 
     // Insert product data if not already in the database
-    ProductModel.findOne({ id: 1 })  // You can check based on any field (e.g., id)
+    ProductModel.findOne({ id: 1 }) // You can check based on any field (e.g., id)
       .then((existingProduct) => {
         if (!existingProduct) {
           // Insert products from the 'data' object
@@ -238,7 +238,6 @@ app.post("/order", authenticateJWT, async (req, res) => {
     return sendResponse(res, 500, "Server error");
   }
 });
-
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
