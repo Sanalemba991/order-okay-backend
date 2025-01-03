@@ -10,7 +10,7 @@ const UserModel = require("./model/User");
 const ProductModel = require("./model/Product");
 const OrderModel = require("./model/Order");
 const authenticateJWT = require("./middlewares/authenticateJWT");
-const data = require("./data"); // Import the data file
+const data = require("./data");
 
 dotenv.config();
 
@@ -18,17 +18,14 @@ const app = express();
 app.use(express.json());
 app.use("/images", express.static("images"));
 
-// Connect to MongoDB
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("Connected to MongoDB");
 
-    // Insert product data if not already in the database
-    ProductModel.findOne({ id: 1 }) // You can check based on any field (e.g., id)
+    ProductModel.findOne({ id: 1 })
       .then((existingProduct) => {
         if (!existingProduct) {
-          // Insert products from the 'data' object
           ProductModel.insertMany(data.products)
             .then(() => {
               console.log("Product data successfully inserted!");
@@ -73,7 +70,6 @@ const sendResponse = (res, status, message, data = {}) => {
   return res.status(status).json({ message, ...data });
 };
 
-// Signup Route
 app.post("/signup", async (req, res) => {
   const { name, email, password, phone } = req.body;
 
@@ -130,7 +126,6 @@ app.post("/signup", async (req, res) => {
   }
 });
 
-// Verify OTP Route
 app.post("/verify-otp", (req, res) => {
   const { mobileNumber, otp } = req.body;
 
@@ -145,7 +140,6 @@ app.post("/verify-otp", (req, res) => {
   }
 });
 
-// Login Route
 app.post("/login", async (req, res) => {
   try {
     const { email, password, otp, phone } = req.body;
@@ -176,7 +170,6 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// Get All Products Route
 app.get("/products", async (req, res) => {
   try {
     const products = await ProductModel.find();
@@ -191,7 +184,6 @@ app.get("/products", async (req, res) => {
   }
 });
 
-// Get Single Product Route
 app.get("/products/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -205,7 +197,6 @@ app.get("/products/:id", async (req, res) => {
   }
 });
 
-// Create Order Route (Protected)
 app.post("/order", authenticateJWT, async (req, res) => {
   try {
     const { email } = req.user;
@@ -221,7 +212,6 @@ app.post("/order", authenticateJWT, async (req, res) => {
       return sendResponse(res, 400, "Order must contain at least one item");
     }
 
-    // Create the order with the proper user structure
     const order = new OrderModel({
       user: {
         id: user._id,
