@@ -5,13 +5,13 @@ const mongoose = require("mongoose");
 const fast2sms = require("fast-two-sms");
 const otplib = require("otplib");
 const jwt = require("jsonwebtoken");
-
+const cors = require("cors");
 const UserModel = require("./model/User");
 const ProductModel = require("./model/Product");
 const OrderModel = require("./model/Order");
 const authenticateJWT = require("./middlewares/authenticateJWT");
 const data = require("./data");
-
+app.use(cors());
 dotenv.config();
 
 const app = express();
